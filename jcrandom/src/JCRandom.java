@@ -58,7 +58,7 @@ public class JCRandom extends Applet {
    */
   public static void install(byte[] bArray, short bOffset, byte bLength) {
     // register(AID)
-    new JCRandom(bArray, bOffset, bLength).register(bArray, (short)(bOffset+1), bArray[bOffset]);
+    new JCRandom(bArray, bOffset, bLength).register();
   }
 
   /**

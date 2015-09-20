@@ -82,7 +82,7 @@ public class JCRSA extends Applet {
    */
   public static void install(byte[] bArray, short bOffset, byte bLength) {
     // register(AID)
-    new JCRSA(bArray, bOffset, bLength).register(bArray, (short)(bOffset+1), bArray[bOffset]);
+    new JCRSA(bArray, bOffset, bLength).register();
   }
 
   /**

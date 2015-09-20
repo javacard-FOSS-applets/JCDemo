@@ -48,7 +48,7 @@ public class JCApplet extends Applet {
    */
   public static void install(byte[] bArray, short bOffset, byte bLength) {
     // register(AID)
-    new JCApplet(bArray, bOffset, bLength).register(bArray, (short)(bOffset+1), bArray[bOffset]);
+    new JCApplet(bArray, bOffset, bLength).register();
   }
 
   /**
