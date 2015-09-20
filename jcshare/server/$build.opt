@@ -1,0 +1,5 @@
+-exportpath C:\GeneralJavaApplet\java_card_kit-2_2_2\api_export_files 
+-out CAP
+-classdir .\dist
+-applet 0x11:0x22:0x33:0x44:0x66:0x77 com.jcdemo.jcshare.server.JCShareServer
+com.jcdemo.jcshare.server 0x11:0x22:0x33:0x44:0x66 1.0
