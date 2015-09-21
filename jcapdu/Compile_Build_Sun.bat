@@ -63,11 +63,11 @@ rem ****************** SCR Start********************************
 
 %JAVA_HOME%\bin\java -classpath %JC_HOME%\lib\offcardverifier.jar;%JC_HOME%\lib\scriptgen.jar; com.sun.javacard.scriptgen.Main -o dist\%Package%\javacard\%Project%.scr dist\%Package%\javacard\%Project%.cap
 
-type %JC_EXT%\Header > %JC_EXT%\temp
-type dist\%Package%\javacard\%Project%.scr >> %JC_EXT%\temp 
-type %JC_EXT%\Footer >> %JC_EXT%\temp
-type %JC_EXT%\temp > dist\%Package%\javacard\%Project%.scr
-del %JC_EXT%\temp
+type test\Header > test\temp
+type dist\%Package%\javacard\%Project%.scr >> test\temp 
+type test\Footer >> test\temp
+type test\temp > dist\%Package%\javacard\%Project%.scr
+del test\temp
 
 if "%choiceOUT%" == "4" goto InstallCrefLabel 
 PAUSE

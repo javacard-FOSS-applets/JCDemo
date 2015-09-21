@@ -4,7 +4,7 @@ import javacard.framework.*;
 import javacardx.crypto.*;
 import javacard.security.*;
 
-public class JCMultiSelect extends Applet 
+public class JCMultiSelect2 extends Applet 
                            implements MultiSelectable {
   // persistent data
   public byte[] pubData;
@@ -12,8 +12,6 @@ public class JCMultiSelect extends Applet
   public byte[] deselectRAM;
   // CLEAR_ON_RESET
   public byte[] selectRAM;
-
-  static JCMultiSelect theMultiInstance = null;
 
 
 
@@ -29,6 +27,8 @@ public class JCMultiSelect extends Applet
   // APDU Command INS
   public static final byte INS_SET_DATA           = (byte)0x01;
   public static final byte INS_GET_DATA           = (byte)0x02;
+  public static final byte INS_GET_OTHER_DATA     = (byte)0x03;
+  public static final byte INS_GET_OTHER_DATA_G   = (byte)0x04;
 
   // INS Table
   public static final byte[] insTable = {
@@ -36,11 +36,13 @@ public class JCMultiSelect extends Applet
     // ctrl -> bit8 :  1 = APDU hava receive data; 0 = no receive data
     (byte)0x00, INS_SET_DATA          , (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0x00,
     (byte)0x00, INS_GET_DATA          , (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0x00,
+    (byte)0x00, INS_GET_OTHER_DATA    , (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0x00,
+    (byte)0x00, INS_GET_OTHER_DATA_G  , (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0x00,
     (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00
   };
 
   /**
-   * @brief JCMultiSelect Construct function
+   * @brief JCMultiSelect2 Construct function
    *
    * @param bArray
    * @param bOffset
@@ -48,8 +50,7 @@ public class JCMultiSelect extends Applet
    *
    * @return 
    */
-  protected JCMultiSelect(byte[] bArray, short bOffset, byte bLength) {
-    theMultiInstance = this;
+  protected JCMultiSelect2(byte[] bArray, short bOffset, byte bLength) {
     pubData = new byte[5];
     deselectRAM = JCSystem.makeTransientByteArray((short)5, JCSystem.CLEAR_ON_DESELECT);
     selectRAM = JCSystem.makeTransientByteArray((short)5, JCSystem.CLEAR_ON_RESET);
@@ -57,20 +58,6 @@ public class JCMultiSelect extends Applet
     // <<< !!! DEBUG !!! >>> //
     debugBuffer = new byte[256];
     // >>> !!! DEBUG !!! <<< //
-  }
-
-  public static JCMultiSelect getMultiInstance() {
-    return theMultiInstance;
-  }
-
-  public byte GetEEP() {
-    return pubData[0];
-  }
-  public byte GetDeselectRAM() {
-    return deselectRAM[0];
-  }
-  public byte GetSelectRAM() {
-    return selectRAM[0];
   }
 
   /**
@@ -84,7 +71,7 @@ public class JCMultiSelect extends Applet
    */
   public static void install(byte[] bArray, short bOffset, byte bLength) {
     // register(AID)
-    new JCMultiSelect(bArray, bOffset, bLength).register();
+    new JCMultiSelect2(bArray, bOffset, bLength).register();
   }
 
   /**
@@ -144,6 +131,21 @@ public class JCMultiSelect extends Applet
           Util.arrayCopyNonAtomic(pubData, (short)0, apduBuffer, (short)(0), (short)5);
           Util.arrayCopyNonAtomic(selectRAM, (short)0, apduBuffer, (short)(5), (short)5);
           Util.arrayCopyNonAtomic(deselectRAM, (short)0, apduBuffer, (short)(10), (short)5);
+          setOutgoingAndSend(apdu, (short)0, (short)15);
+          break;
+        case INS_GET_OTHER_DATA:
+          pubData[0] = JCMultiSelect.getMultiInstance().GetEEP();
+          selectRAM[0] = JCMultiSelect.getMultiInstance().GetSelectRAM();
+          deselectRAM[0] = JCMultiSelect.getMultiInstance().GetDeselectRAM();
+          Util.arrayCopyNonAtomic(pubData, (short)0, apduBuffer, (short)(0), (short)5);
+          Util.arrayCopyNonAtomic(selectRAM, (short)0, apduBuffer, (short)(5), (short)5);
+          Util.arrayCopyNonAtomic(deselectRAM, (short)0, apduBuffer, (short)(10), (short)5);
+          setOutgoingAndSend(apdu, (short)0, (short)15);
+          break;
+        case INS_GET_OTHER_DATA_G:
+          Util.arrayCopyNonAtomic(JCMultiSelect.getMultiInstance().pubData, (short)0, apduBuffer, (short)(0), (short)5);
+          Util.arrayCopyNonAtomic(JCMultiSelect.getMultiInstance().selectRAM, (short)0, apduBuffer, (short)(5), (short)5);
+          Util.arrayCopyNonAtomic(JCMultiSelect.getMultiInstance().deselectRAM, (short)0, apduBuffer, (short)(10), (short)5);
           setOutgoingAndSend(apdu, (short)0, (short)15);
           break;
         default:
