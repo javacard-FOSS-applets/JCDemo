@@ -1,4 +1,4 @@
--exportpath C:\GeneralJavaApplet\java_card_kit-2_2_2\api_export_files 
+-exportpath C:\GeneralJavaApplet\java_card_kit-2_2_2\api_export_files;C:\work\JC\JCDemo\jclib\dist
 -out CAP
 -classdir .\dist
 -applet 0x11:0x22:0x33:0x44:0x55:0x66 com.jcdemo.jcshare.client.JCShareClient

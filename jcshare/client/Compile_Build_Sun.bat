@@ -5,7 +5,7 @@ SET Project=client
 
 SET JC_HOME=C:\GeneralJavaApplet\java_card_kit-2_2_2
 SET JAVA_HOME=C:\GeneralJavaApplet\jdk1.5.0_16
-SET JC_EXT=C:\work\JC\JCDemo\Tool
+SET JC_EXT=C:\work\JC\JCDemo\jclib\dist
 
 DEL .\dist\%Package%\*.class
 
@@ -43,7 +43,7 @@ rem ******************Compile Start********************************
 :CompileLabel
 
 @echo on
-%JAVA_HOME%\bin\javac -g -classpath %JC_HOME%\lib\api.jar;%JC_HOME%\lib\installer.jar .\src\*.java -d .\dist
+%JAVA_HOME%\bin\javac -g -classpath %JC_HOME%\lib\api.jar;%JC_HOME%\lib\installer.jar;%JC_EXT% .\src\*.java -d .\dist
 %JAVA_HOME%\bin\java -classpath %JC_HOME%\lib\offcardverifier.jar;%JC_HOME%\lib\converter.jar; com.sun.javacard.converter.Converter -config $build.opt
 
 @echo off

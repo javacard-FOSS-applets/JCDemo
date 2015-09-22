@@ -1,0 +1,4 @@
+-exportpath C:\GeneralJavaApplet\java_card_kit-2_2_2\api_export_files 
+-out CAP EXP JCA
+-classdir .\dist
+com.jcdemo.jclib 0x01:0x02:0x03:0x04:0x55 1.0

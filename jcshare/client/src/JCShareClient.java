@@ -4,6 +4,8 @@ import javacard.framework.*;
 import javacardx.crypto.*;
 import javacard.security.*;
 
+import com.jcdemo.jclib.*;
+
 public class JCShareClient extends Applet 
                            implements MultiSelectable {
   // extern share object
