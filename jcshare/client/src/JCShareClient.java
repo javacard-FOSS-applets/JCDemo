@@ -10,6 +10,7 @@ public class JCShareClient extends Applet
                            implements MultiSelectable {
   // extern share object
   ShareObject clientSIO;
+  //Shareable clientSIO;
   public AID serverAID;
   public byte[] ServerAID;
 
@@ -125,9 +126,13 @@ public class JCShareClient extends Applet
           ServerAID[5] = 0x77;
           serverAID = JCSystem.lookupAID(ServerAID, (short)0, (byte)6);
           if (serverAID != null) {
-            clientSIO = (ShareObject)JCSystem.getAppletShareableInterfaceObject(serverAID, (byte)0);
-            ISOException.throwIt((short)0x0002);
+            try {
+              clientSIO = (ShareObject)JCSystem.getAppletShareableInterfaceObject(serverAID, (byte)0);
+            } catch (SecurityException e) {
+              ISOException.throwIt((short)0x0003);
+            }
             short outData = clientSIO.getData();
+            Util.setShort(apduBuffer, (short)0, outData);
             setOutgoingAndSend(apdu, (short)0, (short)15);
           } else {
             ISOException.throwIt((short)0x0001);

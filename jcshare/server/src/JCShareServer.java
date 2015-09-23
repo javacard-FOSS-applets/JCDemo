@@ -7,12 +7,7 @@ import javacard.security.*;
 import com.jcdemo.jclib.*;
 
 public class JCShareServer extends Applet 
-                           implements MultiSelectable {
-  // share object
-  public ShareObject shareOBJ;
-
-
-
+                           implements MultiSelectable, ShareObject {
   // <<< !!! DEBUG !!! >>> //
   // Debug buffer (LV)
   public byte[]  debugBuffer;
@@ -45,7 +40,6 @@ public class JCShareServer extends Applet
    * @return 
    */
   protected JCShareServer(byte[] bArray, short bOffset, byte bLength) {
-    shareOBJ = new ShareObject();
 
     // <<< !!! DEBUG !!! >>> //
     debugBuffer = new byte[256];
@@ -82,7 +76,10 @@ public class JCShareServer extends Applet
   }
 
   public Shareable getShareableInterfaceObject(AID clientAID, byte parameter) {
-    return this.shareOBJ;
+    return this;
+  }
+  public short getData() {
+    return (short)0x100;
   }
 
   /**

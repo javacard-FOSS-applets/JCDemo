@@ -2,10 +2,8 @@ package com.jcdemo.jclib;
 
 import javacard.framework.*;
 
-public class ShareObject implements Shareable {
+public interface ShareObject extends Shareable {
 
-  public short getData() {
-    return (short)0x100;
-  }
+  public short getData(); 
   
 }
