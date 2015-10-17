@@ -1,0 +1,5 @@
+-exportpath C:\GeneralJavaApplet\java_card_kit-2_2_2\api_export_files 
+-out CAP JCA EXP
+-classdir .\dist
+-applet 0x11:0x22:0x33:0x44:0x55:0x66 com.jcdemo.jcmsgdig.JCMsgDig
+com.jcdemo.jcmsgdig 0x11:0x22:0x33:0x44:0x55 1.0

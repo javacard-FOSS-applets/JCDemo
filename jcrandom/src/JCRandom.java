@@ -24,10 +24,10 @@ public class JCRandom extends Applet {
   public static final byte[] insTable = {
     // cla ins pp1 pp2 pp3 ctrl
     // ctrl -> bit8 :  1 = APDU hava receive data; 0 = no receive data
-    (byte)0x00, INS_TRUE_RND             , (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0x00,
-    (byte)0x00, INS_TRUE_RND_BY_SEED     , (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0x00,
-    (byte)0x00, INS_FAKE_RND             , (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0x00,
-    (byte)0x00, INS_FAKE_RND_BY_SEED     , (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0x00,
+    (byte)0x00, INS_TRUE_RND             , (byte)0x00, (byte)0x00, (byte)0xFF, (byte)0x00,
+    (byte)0x00, INS_TRUE_RND_BY_SEED     , (byte)0x00, (byte)0x00, (byte)0xFF, (byte)0x80,
+    (byte)0x00, INS_FAKE_RND             , (byte)0x00, (byte)0x00, (byte)0xFF, (byte)0x00,
+    (byte)0x00, INS_FAKE_RND_BY_SEED     , (byte)0x00, (byte)0x00, (byte)0xFF, (byte)0x80,
     (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00
   };
 
@@ -107,7 +107,6 @@ public class JCRandom extends Applet {
           break;
         case INS_TRUE_RND_BY_SEED:
           // 1 geneate true random by seed
-          apdu.setIncomingAndReceive();
           genRandom_true.setSeed(apduBuffer, (short)ISO7816.OFFSET_CDATA, lc);
           genRandom_true.generateData(apduBuffer, (short)ISO7816.OFFSET_CDATA, lc);
           apdu.setOutgoingAndSend((short)ISO7816.OFFSET_CDATA, lc);
@@ -119,7 +118,7 @@ public class JCRandom extends Applet {
           break;
         case INS_FAKE_RND_BY_SEED:
           // 2 geneate fake random by seed
-          apdu.setIncomingAndReceive();
+          genRandom_fake.setSeed(apduBuffer, (short)ISO7816.OFFSET_CDATA, lc);
           genRandom_fake.generateData(apduBuffer, (short)ISO7816.OFFSET_CDATA, lc);
           apdu.setOutgoingAndSend((short)ISO7816.OFFSET_CDATA, lc);
           break;

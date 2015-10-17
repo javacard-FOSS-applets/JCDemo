@@ -8,11 +8,13 @@ public class JCRSA extends Applet {
   // RSA1024 
   public KeyPair rsaKeyPair1024;
   RSAPublicKey rsaPubKey1024;
+  RSAPrivateKey rsaPrivateKey1024;
   RSAPrivateCrtKey rsaPriCrtKey1024;
 
   // RSA2048
   public KeyPair rsaKeyPair2048;
   RSAPublicKey rsaPubKey2048;
+  RSAPrivateKey rsaPriKey2048;
   RSAPrivateCrtKey rsaPriCrtKey2048;
 
   Cipher RSACiper;
